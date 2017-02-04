@@ -1,7 +1,14 @@
 #! /usr/bin/env python
 
+import datetime
+
 import gym
+from gym import wrappers
 env = gym.make('CartPole-v0')
+env = wrappers.Monitor(env, "/tmp/cartpole-{}".format(str(datetime.datetime.now())))
+
+print "Actions: ", env.action_space
+print "Observations: ", env.observation_space
 
 for episode in range(20):
     observation = env.reset()
