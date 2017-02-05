@@ -13,8 +13,8 @@ print "Observations: ", env.observation_space
 import numpy as np
 
 Q = np.zeros([env.observation_space.n, env.action_space.n])
-lr = 0.85
-y = 0.99
+lr = 0.81
+y = 0.96
 
 num_episodes = 10000
 reward_list = []
@@ -33,7 +33,7 @@ for episode in range(num_episodes):
         action = np.argmax(Q[observation,:] + noise)
         next_observation, reward, done, info = env.step(action) 
 
-        Q[observation, action] = Q[observation, action] + lr*(reward + y*np.max(Q[next_observation,:]) - Q[observation, action])
+        Q[observation, action] += lr*(reward + y*np.max(Q[next_observation,:]) - Q[observation, action])
 
         reward_all += reward
         observation = next_observation
